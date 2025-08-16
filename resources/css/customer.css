@@ -1,0 +1,574 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 3px;
+}
+
+/* Shared transitions */
+.smooth-transition {
+    transition: all 0.3s ease;
+}
+
+/* Custom file input */
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    content: "Select files";
+    display: inline-block;
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    outline: none;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.dark .custom-file-input::before {
+    background: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+.custom-file-input:hover::before {
+    border-color: #9ca3af;
+}
+
+.custom-file-input:active::before {
+    background: #e5e7eb;
+}
+
+.dark .custom-file-input:active::before {
+    background: #4b5563;
+}
+
+/* Customer form components */
+.customer-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.customer-form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(55 65 81);
+    margin-bottom: 0.5rem;
+}
+
+.dark .customer-form-label {
+    color: rgb(209 213 219);
+}
+
+.customer-form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(209 213 219);
+    border-radius: 0.375rem;
+    background-color: white;
+    color: rgb(17 24 39);
+    transition: all 0.15s ease-in-out;
+}
+
+.customer-form-input:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: #00A550;
+    border-color: #00A550;
+}
+
+.dark .customer-form-input {
+    border-color: rgb(75 85 99);
+    background-color: rgb(55 65 81);
+    color: rgb(243 244 246);
+}
+
+.customer-form-select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(209 213 219);
+    border-radius: 0.375rem;
+    background-color: white;
+    color: rgb(17 24 39);
+    transition: all 0.15s ease-in-out;
+}
+
+.dark .customer-form-select {
+    border-color: rgb(75 85 99);
+    background-color: rgb(55 65 81);
+    color: rgb(243 244 246);
+}
+
+.customer-form-textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(209 213 219);
+    border-radius: 0.375rem;
+    background-color: white;
+    color: rgb(17 24 39);
+    resize: vertical;
+    transition: all 0.15s ease-in-out;
+}
+
+.dark .customer-form-textarea {
+    border-color: rgb(75 85 99);
+    background-color: rgb(55 65 81);
+    color: rgb(243 244 246);
+}
+
+/* Customer buttons */
+.customer-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.customer-btn:focus {
+    outline: none;
+    ring: 2px;
+    ring-offset: 2px;
+}
+
+.customer-btn-primary {
+    border-color: transparent;
+    color: white;
+    background-color: #00A550;
+}
+
+.customer-btn-primary:hover {
+    background-color: #008A43;
+}
+
+.customer-btn-primary:focus {
+    ring-color: #00A550;
+}
+
+.customer-btn-secondary {
+    border-color: rgb(209 213 219);
+    color: rgb(55 65 81);
+    background-color: white;
+}
+
+.customer-btn-secondary:hover {
+    background-color: rgb(249 250 251);
+}
+
+.dark .customer-btn-secondary {
+    border-color: rgb(75 85 99);
+    color: rgb(229 231 235);
+    background-color: rgb(55 65 81);
+}
+
+.dark .customer-btn-secondary:hover {
+    background-color: rgb(75 85 99);
+}
+
+.customer-btn-success {
+    border-color: transparent;
+    color: white;
+    background-color: rgb(22 163 74);
+}
+
+.customer-btn-success:hover {
+    background-color: rgb(21 128 61);
+}
+
+/* Customer cards */
+.customer-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    border: 1px solid rgb(229 231 235);
+}
+
+.dark .customer-card {
+    background-color: rgb(31 41 55);
+    border-color: rgb(55 65 81);
+}
+
+.customer-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgb(229 231 235);
+}
+
+.dark .customer-card-header {
+    border-bottom-color: rgb(55 65 81);
+}
+
+.customer-card-body {
+    padding: 1.5rem;
+}
+
+.customer-card-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: rgb(17 24 39);
+}
+
+.dark .customer-card-title {
+    color: white;
+}
+
+/* Customer navigation */
+.customer-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    transition: colors 0.15s ease-in-out;
+}
+
+.customer-nav-link-active {
+    background-color: rgba(0, 165, 80, 0.1);
+    color: #00A550;
+}
+
+.dark .customer-nav-link-active {
+    background-color: rgba(0, 165, 80, 0.2);
+    color: #7dd3fc;
+}
+
+.customer-nav-link-inactive {
+    color: rgb(75 85 99);
+}
+
+.customer-nav-link-inactive:hover {
+    background-color: rgb(249 250 251);
+    color: rgb(17 24 39);
+}
+
+.dark .customer-nav-link-inactive {
+    color: rgb(156 163 175);
+}
+
+.dark .customer-nav-link-inactive:hover {
+    background-color: rgb(55 65 81);
+    color: rgb(243 244 246);
+}
+
+/* Customer status badges */
+.customer-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.customer-badge-verified {
+    background-color: rgb(220 252 231);
+    color: rgb(22 101 52);
+}
+
+.dark .customer-badge-verified {
+    background-color: rgb(22 101 52);
+    color: rgb(220 252 231);
+}
+
+.customer-badge-unverified {
+    background-color: rgb(254 249 195);
+    color: rgb(133 77 14);
+}
+
+.dark .customer-badge-unverified {
+    background-color: rgb(133 77 14);
+    color: rgb(254 249 195);
+}
+
+.customer-badge-pending {
+    background-color: rgba(0, 165, 80, 0.1);
+    color: #00A550;
+}
+
+.dark .customer-badge-pending {
+    background-color: #00A550;
+    color: white;
+}
+
+/* Customer profile components */
+.customer-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.customer-profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.customer-profile-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(107 114 128);
+}
+
+.dark .customer-profile-label {
+    color: rgb(156 163 175);
+}
+
+.customer-profile-value {
+    font-size: 0.875rem;
+    color: rgb(17 24 39);
+}
+
+.dark .customer-profile-value {
+    color: white;
+}
+
+/* Customer mobile-specific styles */
+.customer-mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgb(17 24 39 / 0.5);
+}
+
+@media (min-width: 1024px) {
+    .customer-mobile-menu {
+        display: none;
+    }
+}
+
+.customer-mobile-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 16rem;
+    background-color: white;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.dark .customer-mobile-panel {
+    background-color: rgb(31 41 55);
+}
+
+/* Customer account sidebar */
+.customer-account-sidebar {
+    width: 16rem;
+    background-color: white;
+    border-right: 1px solid rgb(229 231 235);
+}
+
+.dark .customer-account-sidebar {
+    background-color: rgb(31 41 55);
+    border-right-color: rgb(55 65 81);
+}
+
+.customer-account-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+}
+
+/* Livewire customer components */
+.livewire-customer-component {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.livewire-customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.livewire-verification-notice {
+    background-color: rgb(239 246 255);
+    border: 1px solid rgb(191 219 254);
+    border-radius: 0.375rem;
+    padding: 1rem;
+}
+
+.dark .livewire-verification-notice {
+    background-color: rgb(30 58 138 / 0.2);
+    border-color: rgb(30 64 175);
+}
+
+.livewire-success-notice {
+    background-color: rgb(240 253 244);
+    border: 1px solid rgb(187 247 208);
+    border-radius: 0.375rem;
+    padding: 1rem;
+}
+
+.dark .livewire-success-notice {
+    background-color: rgb(22 101 52 / 0.2);
+    border-color: rgb(34 197 94);
+}
+
+/* Eco Travel brand colors */
+.bg-eco-green {
+    background-color: #00A550;
+}
+
+.bg-eco-green-dark {
+    background-color: #008A43;
+}
+
+.text-eco-green {
+    color: #00A550;
+}
+
+.text-eco-green-dark {
+    color: #008A43;
+}
+
+.hover\:bg-eco-green-dark:hover {
+    background-color: #008A43;
+}
+
+.hover\:text-eco-green:hover {
+    color: #00A550;
+}
+
+.hover\:text-eco-green-dark:hover {
+    color: #008A43;
+}
+
+.border-eco-green {
+    border-color: #00A550;
+}
+
+.ring-eco-green {
+    --tw-ring-color: #00A550;
+}
+
+.focus\:ring-eco-green:focus {
+    --tw-ring-color: #00A550;
+}
+
+.focus\:border-eco-green:focus {
+    border-color: #00A550;
+}
+
+/* Additional green shades for gradients */
+.from-eco-green {
+    --tw-gradient-from: #00A550 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(0 165 80 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-eco-green {
+    --tw-gradient-to: #00A550 var(--tw-gradient-to-position);
+}
+
+.to-eco-green-dark {
+    --tw-gradient-to: #008A43 var(--tw-gradient-to-position);
+}
+
+.dark\:from-eco-green-dark:is(.dark *) {
+    --tw-gradient-from: #008A43 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(0 138 67 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark\:to-eco-green:is(.dark *) {
+    --tw-gradient-to: #00A550 var(--tw-gradient-to-position);
+}
+
+.dark\:to-green-900:is(.dark *) {
+    --tw-gradient-to: rgb(20 83 45) var(--tw-gradient-to-position);
+}
+
+/* Dark mode hover classes */
+.dark\:hover\:text-eco-green:is(.dark *):hover {
+    color: #00A550;
+}
+
+.dark\:hover\:text-eco-green-dark:is(.dark *):hover {
+    color: #008A43;
+}
+
+/* Hero section gradient */
+.hero-gradient {
+    background: linear-gradient(to right, #00A550, #008A43);
+}
+
+.dark .hero-gradient {
+    background: linear-gradient(to right, #008A43, #14532d);
+}
+
+/* Global color overrides for eco travel branding */
+.bg-blue-500 {
+    background-color: #00A550 !important;
+}
+
+.bg-blue-600 {
+    background-color: #00A550 !important;
+}
+
+.hover\:bg-blue-700:hover {
+    background-color: #008A43 !important;
+}
+
+.text-blue-600 {
+    color: #00A550 !important;
+}
+
+.hover\:text-blue-700:hover {
+    color: #008A43 !important;
+}
+
+.dark .text-blue-400 {
+    color: #00A550 !important;
+}
+
+.dark .hover\:text-blue-300:hover {
+    color: #7dd3fc !important;
+}
+
+.focus\:ring-blue-500:focus {
+    --tw-ring-color: #00A550 !important;
+}
+
+.border-blue-500 {
+    border-color: #00A550 !important;
+}
+
+.ring-blue-500 {
+    --tw-ring-color: #00A550 !important;
+}

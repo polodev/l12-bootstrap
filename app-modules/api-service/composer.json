@@ -1,0 +1,24 @@
+{
+	"name": "modules/api-service",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\ApiService\\": "src/",
+			"Modules\\ApiService\\Tests\\": "tests/",
+			"Modules\\ApiService\\Database\\Factories\\": "database/factories/",
+			"Modules\\ApiService\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\ApiService\\Providers\\ApiServiceServiceProvider"
+			]
+		}
+	}
+}

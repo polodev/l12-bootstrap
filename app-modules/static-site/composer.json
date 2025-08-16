@@ -1,0 +1,24 @@
+{
+	"name": "modules/static-site",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\StaticSite\\": "src/",
+			"Modules\\StaticSite\\Tests\\": "tests/",
+			"Modules\\StaticSite\\Database\\Factories\\": "database/factories/",
+			"Modules\\StaticSite\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\StaticSite\\Providers\\StaticSiteServiceProvider"
+			]
+		}
+	}
+}

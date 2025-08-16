@@ -1,0 +1,24 @@
+{
+	"name": "modules/documentation",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Documentation\\": "src/",
+			"Modules\\Documentation\\Tests\\": "tests/",
+			"Modules\\Documentation\\Database\\Factories\\": "database/factories/",
+			"Modules\\Documentation\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\Documentation\\Providers\\DocumentationServiceProvider"
+			]
+		}
+	}
+}

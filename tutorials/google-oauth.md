@@ -1,0 +1,1 @@
+first need to verified domain using google. it automatically redirect to cloudflare account

@@ -1,0 +1,24 @@
+{
+	"name": "modules/customer-dashboard",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\CustomerDashboard\\": "src/",
+			"Modules\\CustomerDashboard\\Tests\\": "tests/",
+			"Modules\\CustomerDashboard\\Database\\Factories\\": "database/factories/",
+			"Modules\\CustomerDashboard\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\CustomerDashboard\\Providers\\CustomerDashboardServiceProvider"
+			]
+		}
+	}
+}

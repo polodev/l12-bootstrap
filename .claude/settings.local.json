@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(composer:*)",
+      "Bash(php artisan vendor:publish:*)",
+      "Bash(mkdir:*)",
+      "Bash(grep:*)",
+      "Bash(php artisan:*)",
+      "Bash(curl:*)",
+      "Bash(rm:*)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "WebFetch(domain:prnt.sc)",
+      "Bash(rg:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(npm run build:*)",
+      "Bash(open http://rajib.test/admin-dashboard)",
+      "Bash(open http://rajib.test/admin)",
+      "Bash(aws configure:*)",
+      "Bash(touch:*)",
+      "WebFetch(domain:gozayaan.com)",
+      "WebFetch(domain:sharetrip.net)",
+      "Bash(open http://rajib.test/)",
+      "WebFetch(domain:www.ecotravelsonline.com.bd)",
+      "WebFetch(domain:www.ecotravelsonline.com.bd)",
+      "WebFetch(domain:www.ecotravelsonline.com.bd)",
+      "WebFetch(domain:bimafy.com)",
+      "Bash(npm install)",
+      "Bash(npm run dev:*)"
+    ],
+    "deny": []
+  }
+}

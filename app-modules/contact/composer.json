@@ -1,0 +1,24 @@
+{
+	"name": "modules/contact",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Contact\\": "src/",
+			"Modules\\Contact\\Tests\\": "tests/",
+			"Modules\\Contact\\Database\\Factories\\": "database/factories/",
+			"Modules\\Contact\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\Contact\\Providers\\ContactServiceProvider"
+			]
+		}
+	}
+}

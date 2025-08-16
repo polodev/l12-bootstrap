@@ -1,0 +1,24 @@
+{
+	"name": "modules/customer-account-layout",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\CustomerAccountLayout\\": "src/",
+			"Modules\\CustomerAccountLayout\\Tests\\": "tests/",
+			"Modules\\CustomerAccountLayout\\Database\\Factories\\": "database/factories/",
+			"Modules\\CustomerAccountLayout\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\CustomerAccountLayout\\Providers\\CustomerAccountServiceProvider"
+			]
+		}
+	}
+}

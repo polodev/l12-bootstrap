@@ -1,0 +1,24 @@
+{
+	"name": "modules/location",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Location\\": "src/",
+			"Modules\\Location\\Tests\\": "tests/",
+			"Modules\\Location\\Database\\Factories\\": "database/factories/",
+			"Modules\\Location\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\Location\\Providers\\LocationServiceProvider"
+			]
+		}
+	}
+}

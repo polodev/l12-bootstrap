@@ -1,0 +1,24 @@
+{
+	"name": "modules/customer-frontend-layout",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\CustomerFrontendLayout\\": "src/",
+			"Modules\\CustomerFrontendLayout\\Tests\\": "tests/",
+			"Modules\\CustomerFrontendLayout\\Database\\Factories\\": "database/factories/",
+			"Modules\\CustomerFrontendLayout\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\CustomerFrontendLayout\\Providers\\CustomerFrontendServiceProvider"
+			]
+		}
+	}
+}

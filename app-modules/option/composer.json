@@ -1,0 +1,24 @@
+{
+	"name": "modules/option",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Option\\": "src/",
+			"Modules\\Option\\Tests\\": "tests/",
+			"Modules\\Option\\Database\\Factories\\": "database/factories/",
+			"Modules\\Option\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\Option\\Providers\\OptionServiceProvider"
+			]
+		}
+	}
+}

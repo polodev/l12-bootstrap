@@ -1,0 +1,24 @@
+{
+    "name": "modules/page",
+    "description": "Pages module for website content management",
+    "type": "library",
+    "version": "1.0",
+    "license": "proprietary",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Modules\\Page\\": "src/",
+            "Modules\\Page\\Tests\\": "tests/",
+            "Modules\\Page\\Database\\Factories\\": "database/factories/",
+            "Modules\\Page\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Page\\Providers\\PageServiceProvider"
+            ]
+        }
+    }
+}
