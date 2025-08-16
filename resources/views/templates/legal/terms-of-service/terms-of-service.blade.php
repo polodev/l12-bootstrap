@@ -30,26 +30,6 @@
                     @endif
                 </div>
 
-                <!-- Contact Information -->
-                <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ __('messages.contact_information') }}</h3>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                        <p class="text-gray-700 dark:text-gray-300">
-                            {{ __('messages.terms_contact_text') }}
-                        </p>
-                        <div class="mt-4 space-y-2">
-                            <p class="text-gray-700 dark:text-gray-300">
-                                <strong>{{ __('messages.email') }}:</strong> info@ecotravelsonline.com.bd
-                            </p>
-                            <p class="text-gray-700 dark:text-gray-300">
-                                <strong>{{ __('messages.phone') }}:</strong> +8809647668822
-                            </p>
-                            <p class="text-gray-700 dark:text-gray-300">
-                                <strong>{{ __('messages.address') }}:</strong> {{ __('messages.company_address') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

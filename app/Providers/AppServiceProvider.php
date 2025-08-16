@@ -23,10 +23,6 @@ class AppServiceProvider extends ServiceProvider
         // Configure morph maps for activity logging
         Relation::morphMap([
             'payment' => \Modules\Payment\Models\Payment::class,
-            'booking' => \Modules\Booking\Models\Booking::class,
-            'booking_hotel' => \Modules\Booking\Models\BookingHotel::class,
-            'booking_tour' => \Modules\Booking\Models\BookingTour::class,
-            'booking_flight' => \Modules\Booking\Models\BookingFlight::class,
             'user' => \App\Models\User::class,
         ]);
     }

@@ -11,7 +11,7 @@
                 </svg>
             </button>
             <div class="ml-4 font-semibold text-xl text-blue-600 dark:text-blue-400">
-                {{ config('app.name') }} <span class="text-sm text-gray-500">Admin</span>
+                Laravel 12 <span class="text-sm text-gray-500">Admin</span>
             </div>
         </div>
 
