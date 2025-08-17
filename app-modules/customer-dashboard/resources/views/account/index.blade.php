@@ -99,6 +99,22 @@
                 </div>
             </div>
             
+            <!-- My Subscription -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-purple-200 dark:border-purple-900 hover:shadow-md transition-shadow duration-200">
+                <div class="p-6 text-center">
+                    <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('messages.my_subscription') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">{{ __('messages.manage_subscription_details') }}</p>
+                    <a href="{{ route('accounts.subscription') }}" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors duration-200 text-sm font-medium">
+                        {{ __('messages.view_subscription') }}
+                    </a>
+                </div>
+            </div>
+
             <!-- My Wishlist -->
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-green-200 dark:border-green-900 hover:shadow-md transition-shadow duration-200">
                 <div class="p-6 text-center">

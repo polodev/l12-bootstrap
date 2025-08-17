@@ -13,7 +13,7 @@ use Modules\MyFile\Http\Controllers\MyFileController;
 |
 */
 
-Route::middleware(['web', 'auth', 'role.access:admin'])
+Route::middleware(['web', 'auth', 'role.access:developer,admin,employee,accounts'])
     ->prefix('admin')
     ->name('my-file::')
     ->group(function () {

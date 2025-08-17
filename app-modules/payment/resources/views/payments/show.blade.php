@@ -50,8 +50,8 @@
                             <div>
                                 <span class="text-sm text-gray-600 dark:text-gray-400">Payment Type:</span>
                                 <div class="mt-1">
-                                    @if($payment->booking_id)
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100">Booking Payment</span>
+                                    @if($payment->payment_type === 'subscription')
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-900 dark:bg-purple-900 dark:text-purple-100">Subscription Payment</span>
                                     @elseif($payment->payment_type === 'custom_payment')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-100">Custom Payment</span>
                                     @else
@@ -61,6 +61,117 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Subscription Details (for subscription payments) -->
+                    @if($payment->payment_type === 'subscription' && $payment->subscription_plan_id)
+                    <div class="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+                            <svg class="w-5 h-5 inline mr-2 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                            Subscription Details
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            @php
+                                $subscriptionPlan = \Modules\Subscription\Models\SubscriptionPlan::find($payment->subscription_plan_id);
+                                $userSubscription = \Modules\Subscription\Models\UserSubscription::where('payment_id', $payment->id)->first();
+                                $coupon = $payment->coupon_id ? \Modules\Coupon\Models\Coupon::find($payment->coupon_id) : null;
+                            @endphp
+                            
+                            @if($subscriptionPlan)
+                            <div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Subscription Plan:</span>
+                                <div class="font-medium text-gray-900 dark:text-gray-100">{{ $subscriptionPlan->name }}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $subscriptionPlan->duration_text }}</div>
+                            </div>
+                            @endif
+                            
+                            @if($payment->user_id)
+                            <div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Subscriber:</span>
+                                @php $subscriber = \App\Models\User::find($payment->user_id); @endphp
+                                <div class="font-medium text-gray-900 dark:text-gray-100">{{ $subscriber->name ?? 'User Not Found' }}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $subscriber->email ?? 'N/A' }}</div>
+                            </div>
+                            @endif
+                            
+                            @if($payment->original_amount && $payment->original_amount != $payment->amount)
+                            <div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Original Amount:</span>
+                                <div class="font-medium text-gray-900 dark:text-gray-100">{{ number_format($payment->original_amount, 2) }} BDT</div>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Discount Applied:</span>
+                                <div class="font-medium text-green-600 dark:text-green-400">-{{ number_format($payment->discount_amount, 2) }} BDT</div>
+                            </div>
+                            @endif
+                            
+                            @if($payment->coupon_code)
+                            <div class="md:col-span-2">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Coupon Used:</span>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                        {{ $payment->coupon_code }}
+                                    </span>
+                                    @if($coupon)
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                        ({{ $coupon->type === 'percentage' ? $coupon->value.'%' : number_format($coupon->value, 2).' BDT' }} off)
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                            
+                            @if($userSubscription)
+                            <div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Subscription Period:</span>
+                                <div class="font-medium text-gray-900 dark:text-gray-100">
+                                    {{ $userSubscription->starts_at->format('M j, Y') }} - {{ $userSubscription->ends_at->format('M j, Y') }}
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Subscription Status:</span>
+                                <div class="mt-1">
+                                    @if($userSubscription->status === 'active')
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Active</span>
+                                    @elseif($userSubscription->status === 'expired')
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Expired</span>
+                                    @elseif($userSubscription->status === 'cancelled')
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">Cancelled</span>
+                                    @else
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">{{ ucfirst($userSubscription->status) }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                        
+                        @if($userSubscription)
+                        <div class="mt-4 pt-4 border-t border-purple-200 dark:border-purple-700">
+                            <div class="flex gap-2">
+                                @if($subscriptionPlan)
+                                <a href="{{ route('subscription::admin.plans.show', $subscriptionPlan) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-purple-700 bg-purple-100 border border-purple-300 rounded-md hover:bg-purple-200">
+                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    View Plan Details
+                                </a>
+                                @endif
+                                @if($userSubscription)
+                                <a href="{{ route('subscription::admin.subscriptions.show', $userSubscription) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-purple-700 bg-purple-100 border border-purple-300 rounded-md hover:bg-purple-200">
+                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    View Subscription
+                                </a>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    @endif
 
                     <!-- Customer Information -->
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">

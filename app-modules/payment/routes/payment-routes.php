@@ -6,7 +6,7 @@ use Modules\Payment\Http\Controllers\FrontendPaymentController;
 use Modules\Payment\Http\Controllers\SslCommerzController;
 
 // Admin Routes (No localization - admin/dashboard only)
-Route::prefix('admin-dashboard')->name('payment::admin.')->middleware(['web', 'auth'])->group(function () {
+Route::prefix('admin-dashboard')->name('payment::admin.')->middleware(['web', 'auth', 'role.access:developer,admin,employee,accounts'])->group(function () {
     
     // Payment Management Routes
     Route::prefix('payments')->name('payments.')->group(function () {
@@ -25,7 +25,7 @@ Route::prefix('admin-dashboard')->name('payment::admin.')->middleware(['web', 'a
 // Frontend Routes (With localization support)
 Route::group([
     'prefix' => \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'web'],
+    'middleware' => ['web', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
     'as' => 'payment::'
 ], function() {
     

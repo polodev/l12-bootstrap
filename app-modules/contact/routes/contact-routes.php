@@ -5,7 +5,7 @@ use Modules\Contact\Http\Controllers\ContactFrontendController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Admin Routes
-Route::prefix('admin-dashboard')->name('contact::admin.')->middleware(['web', 'auth'])->group(function () {
+Route::prefix('admin-dashboard')->name('contact::admin.')->middleware(['web', 'auth', 'role.access:developer,admin,employee,accounts'])->group(function () {
     
     // Contact Management Routes
     Route::prefix('contacts')->name('contacts.')->group(function () {

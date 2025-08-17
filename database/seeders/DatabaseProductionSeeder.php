@@ -12,6 +12,8 @@ use Modules\Blog\Database\Seeders\BlogSeederProduction;
 use Modules\Page\Database\Seeders\PageSeederProduction;
 use Modules\Location\Database\Seeders\CountrySeederProduction;
 use Modules\Location\Database\Seeders\CitySeederProduction;
+use Modules\Subscription\Database\Seeders\SubscriptionSeederProduction;
+use Modules\Coupon\Database\Seeders\CouponSeederProduction;
 
 class DatabaseProductionSeeder extends Seeder
 {
@@ -31,6 +33,9 @@ class DatabaseProductionSeeder extends Seeder
             // CountrySeederProduction::class,
             // CitySeederProduction::class,
 
+            // Subscription & Coupon Modules
+            SubscriptionSeederProduction::class,
+            CouponSeederProduction::class,
            
         ]);
 

@@ -14,6 +14,8 @@ use Modules\Location\Database\Seeders\CountrySeeder;
 use Modules\Option\Database\Seeders\OptionSeeder;
 use Modules\Page\Database\Seeders\PageSeeder;
 use Modules\Payment\Database\Seeders\PaymentSeeder;
+use Modules\Subscription\Database\Seeders\SubscriptionSeeder;
+use Modules\Coupon\Database\Seeders\CouponSeeder;
 
 class DatabaseSandboxSeeder extends Seeder
 {
@@ -36,6 +38,10 @@ class DatabaseSandboxSeeder extends Seeder
 
             // Payment Module
             PaymentSeeder::class,
+
+            // Subscription & Coupon Modules
+            SubscriptionSeeder::class,
+            CouponSeeder::class,
 
             // contact
             ContactSeeder::class,

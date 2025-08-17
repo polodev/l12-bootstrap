@@ -14,9 +14,18 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             
-            // Payment type - determines if this is for a booking or custom payment
-            $table->string('payment_type')->default('custom_payment'); // 'custom_payment'
+            // Payment type - determines if this is for a booking, custom payment, or subscription
+            $table->string('payment_type')->default('custom_payment'); // 'custom_payment', 'subscription'
             
+            // Subscription-related fields (used when payment_type = 'subscription')
+            $table->foreignId('subscription_plan_id')->nullable(); // Links to subscription_plans table
+            $table->foreignId('user_id')->nullable(); // User making the subscription payment
+            
+            // Coupon information for subscription payments
+            $table->foreignId('coupon_id')->nullable(); // Applied coupon
+            $table->decimal('original_amount', 10, 2)->nullable(); // Amount before discount
+            $table->decimal('discount_amount', 10, 2)->default(0); // Discount applied
+            $table->string('coupon_code')->nullable(); // Coupon code used
             
             // Who created this payment record
             $table->foreignId('created_by')->nullable(); // User ID of creator (admin/employee or auto-generated)
@@ -71,9 +80,13 @@ return new class extends Migration
             $table->index(['email_address', 'status']); // For payment lookups
             $table->index(['mobile', 'status']); // For payment lookups
             $table->index(['ip_address', 'created_at']); // For rate limiting
+            $table->index(['payment_type', 'subscription_plan_id']); // For subscription payments
+            $table->index(['user_id', 'payment_type']); // For user payment lookups
+            $table->index(['coupon_id']); // For coupon usage tracking
             
             // Note: Application-level validation will ensure proper payment_type handling:
             // - When payment_type = 'custom_payment': customer fields should be filled
+            // - When payment_type = 'subscription': subscription_plan_id and user_id should be filled
             
             // Note: Foreign key constraints removed - validation handled at application level
         });

@@ -1,11 +1,26 @@
 <?php
 
-// use Modules\Coupon\Http\Controllers\CouponController;
+use Illuminate\Support\Facades\Route;
+use Modules\Coupon\Http\Controllers\Admin\CouponController;
 
-// Route::get('/coupons', [CouponController::class, 'index'])->name('coupons.index');
-// Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
-// Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
-// Route::get('/coupons/{coupon}', [CouponController::class, 'show'])->name('coupons.show');
-// Route::get('/coupons/{coupon}/edit', [CouponController::class, 'edit'])->name('coupons.edit');
-// Route::put('/coupons/{coupon}', [CouponController::class, 'update'])->name('coupons.update');
-// Route::delete('/coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
+// Admin routes (not localized)
+Route::middleware(['web', 'auth', 'role.access:developer,admin,employee,accounts'])->prefix('admin')->name('coupon::admin.')->group(function() {
+    
+    // Coupons Management
+    Route::prefix('coupons')->name('coupons.')->group(function() {
+        Route::get('/', [CouponController::class, 'index'])->name('index');
+        Route::post('/json', [CouponController::class, 'json'])->name('json');
+        Route::get('/create', [CouponController::class, 'create'])->name('create');
+        Route::post('/', [CouponController::class, 'store'])->name('store');
+        Route::get('/{coupon}', [CouponController::class, 'show'])->name('show');
+        Route::get('/{coupon}/edit', [CouponController::class, 'edit'])->name('edit');
+        Route::put('/{coupon}', [CouponController::class, 'update'])->name('update');
+        Route::delete('/{coupon}', [CouponController::class, 'destroy'])->name('destroy');
+        Route::post('/{coupon}/toggle-status', [CouponController::class, 'toggleStatus'])->name('toggle-status');
+    });
+    
+    // Usage Report
+    Route::get('/coupon-usage-report', [CouponController::class, 'usageReport'])->name('coupons.usage-report');
+    Route::post('/coupon-usage-report/json', [CouponController::class, 'usageReportJson'])->name('coupons.usage-report.json');
+    
+});

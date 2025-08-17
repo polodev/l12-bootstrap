@@ -6,7 +6,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 // Localized test routes for all layout components
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    'middleware' => ['web', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function() {
     
     // Test index page with links to all layouts
@@ -26,6 +26,6 @@ Route::group([
 });
 
 // Admin Dashboard Layout Test (excluded from localization like other admin routes)
-Route::get('/test/admin-dashboard', function () {
+Route::middleware(['web'])->get('/test/admin-dashboard', function () {
     return view('test::admin-dashboard');
 })->name('test.admin-dashboard');

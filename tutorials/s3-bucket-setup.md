@@ -190,7 +190,7 @@ We'll create two S3 buckets:
             "HEAD"
         ],
         "AllowedOrigins": [
-            "http://rajib.test",
+            "http://l12-bootstrap.test/",
             "https://yourdomain.com"
         ],
         "ExposeHeaders": [

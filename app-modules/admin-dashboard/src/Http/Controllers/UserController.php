@@ -3,6 +3,7 @@
 namespace Modules\AdminDashboard\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Helpers\Helpers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -126,20 +127,10 @@ class UserController extends Controller
                 return $actions;
             })
             ->addColumn('created_at_formatted', function (User $user) {
-                return '<div class="text-sm">
-                            <div class="text-gray-900 dark:text-gray-100">' . $user->created_at->format('M d, Y') . '</div>
-                            <div class="text-gray-500 dark:text-gray-400 text-xs">' . $user->created_at->diffForHumans() . '</div>
-                        </div>';
+                return Helpers::getFormattedDateForDataTable($user->created_at);
             })
             ->addColumn('last_login_formatted', function (User $user) {
-                if (isset($user->last_login_at) && $user->last_login_at) {
-                    return '<div class="text-sm">
-                                <div class="text-gray-900 dark:text-gray-100">' . $user->last_login_at->format('M d, Y') . '</div>
-                                <div class="text-gray-500 dark:text-gray-400 text-xs">' . $user->last_login_at->diffForHumans() . '</div>
-                            </div>';
-                } else {
-                    return '<span class="text-gray-500 dark:text-gray-400 text-sm">Never</span>';
-                }
+                return Helpers::getFormattedDateForDataTable($user->last_login_at);
             })
             ->setRowClass(function (User $user) {
                 $classes = 'hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors';

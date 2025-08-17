@@ -87,12 +87,12 @@ The system works immediately with your existing data:
 
 ```bash
 # Visit these URLs to test the interface
-http://rajib.test/dynamic-flight
-http://rajib.test/dynamic-hotel
+http://l12-bootstrap.test//dynamic-flight
+http://l12-bootstrap.test//dynamic-hotel
 
 # Bengali versions
-http://rajib.test/bn/dynamic-flight  
-http://rajib.test/bn/dynamic-hotel
+http://l12-bootstrap.test//bn/dynamic-flight  
+http://l12-bootstrap.test//bn/dynamic-hotel
 ```
 
 ### **Step 3: Configure API Providers (When Ready)**

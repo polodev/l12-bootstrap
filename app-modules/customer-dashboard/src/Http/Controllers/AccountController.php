@@ -4,6 +4,7 @@ namespace Modules\CustomerDashboard\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Subscription\Models\UserSubscription;
 
 class AccountController extends Controller
 {
@@ -32,5 +33,24 @@ class AccountController extends Controller
         $user = auth()->user();
         // TODO: Add support functionality later
         return view('customer-dashboard::account.support', compact('user'));
+    }
+
+    public function subscription()
+    {
+        $user = auth()->user();
+        
+        // Get current subscription
+        $currentSubscription = UserSubscription::forUser($user->id)
+            ->with(['subscriptionPlan', 'payment'])
+            ->latest()
+            ->first();
+            
+        // Get subscription history
+        $subscriptionHistory = UserSubscription::forUser($user->id)
+            ->with(['subscriptionPlan', 'payment'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        
+        return view('customer-dashboard::account.subscription', compact('user', 'currentSubscription', 'subscriptionHistory'));
     }
 }

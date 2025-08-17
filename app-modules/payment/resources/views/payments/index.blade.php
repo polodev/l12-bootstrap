@@ -61,8 +61,8 @@
                         <label for="payment_type" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Payment Type</label>
                         <select class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" name="payment_type" id="payment_type">
                             <option value="">All Types</option>
-                            <option value="booking">Booking Payments</option>
                             <option value="custom_payment">Custom Payments</option>
+                            <option value="subscription">Subscription Payments</option>
                         </select>
                     </div>
                     <div>

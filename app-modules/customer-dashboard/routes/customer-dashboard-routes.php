@@ -19,6 +19,7 @@ Route::group([
             Route::get('/', [AccountController::class, 'index'])->name('index');
             Route::get('/orders', [AccountController::class, 'orders'])->name('orders');
             Route::get('/wishlist', [AccountController::class, 'wishlist'])->name('wishlist');
+            Route::get('/subscription', [AccountController::class, 'subscription'])->name('subscription');
             Route::get('/support', [AccountController::class, 'support'])->name('support');
             
             // Settings routes (under accounts)

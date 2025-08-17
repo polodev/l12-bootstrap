@@ -14,7 +14,7 @@ use Modules\Documentation\Http\Controllers\DocumentationController;
 |
 */
 
-Route::middleware(['web', 'auth'])->prefix('dashboard/documentation')->name('documentation::admin.')->group(function () {
+Route::middleware(['web', 'auth', 'role.access:developer,admin,employee,accounts'])->prefix('dashboard/documentation')->name('documentation::admin.')->group(function () {
     // Documentation CRUD routes
     Route::get('/', [DocumentationController::class, 'index'])->name('index');
     Route::post('/json', [DocumentationController::class, 'indexJson'])->name('json');

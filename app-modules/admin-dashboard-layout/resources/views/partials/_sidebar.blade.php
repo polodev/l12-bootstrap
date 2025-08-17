@@ -5,6 +5,8 @@
            userManagementOpen: false,
            locationOpen: false,
            paymentOpen: false,
+           subscriptionOpen: false,
+           couponOpen: false,
            contentManagementOpen: false,
            systemOpen: false 
        }">
@@ -113,6 +115,47 @@
                         <div x-show="paymentOpen" x-transition class="ml-8 space-y-1" x-cloak>
                             <a href="{{ route('payment::admin.payments.index') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('payment::admin.payments.index') || request()->routeIs('payment::admin.payments.show') || request()->routeIs('payment::admin.payments.edit') ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : '' }}">All Payments</a>
                             <a href="{{ route('payment::admin.payments.create_custom_payment') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('payment::admin.payments.create_custom_payment') ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : '' }}">Create Custom Payment</a>
+                        </div>
+                    </div>
+
+                    <!-- Subscription Management -->
+                    <div>
+                        <button @click="subscriptionOpen = !subscriptionOpen"
+                                class="w-full flex items-center justify-between px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                                <span>Subscriptions</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-90': subscriptionOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="subscriptionOpen" x-transition class="ml-8 space-y-1" x-cloak>
+                            <a href="{{ route('subscription::admin.plans.index') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('subscription::admin.plans.*') ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : '' }}">Subscription Plans</a>
+                            <a href="{{ route('subscription::admin.subscriptions.index') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('subscription::admin.subscriptions.*') ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : '' }}">User Subscriptions</a>
+                        </div>
+                    </div>
+
+                    <!-- Coupon Management -->
+                    <div>
+                        <button @click="couponOpen = !couponOpen"
+                                class="w-full flex items-center justify-between px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                </svg>
+                                <span>Coupons</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-90': couponOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="couponOpen" x-transition class="ml-8 space-y-1" x-cloak>
+                            <a href="{{ route('coupon::admin.coupons.index') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('coupon::admin.coupons.index') || request()->routeIs('coupon::admin.coupons.show') || request()->routeIs('coupon::admin.coupons.edit') ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : '' }}">All Coupons</a>
+                            <a href="{{ route('coupon::admin.coupons.create') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('coupon::admin.coupons.create') ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : '' }}">Create Coupon</a>
+                            <a href="{{ route('coupon::admin.coupons.usage-report') }}" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors {{ request()->routeIs('coupon::admin.coupons.usage-report') ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : '' }}">Coupon Usage Report</a>
                         </div>
                     </div>
                 </div>
