@@ -23,7 +23,6 @@
         "mcamara/laravel-localization": "^2.3",
         "modules/admin-dashboard": "*",
         "modules/admin-dashboard-layout": "*",
-        "modules/api-service": "*",
         "modules/auth": "*",
         "modules/blog": "*",
         "modules/contact": "*",

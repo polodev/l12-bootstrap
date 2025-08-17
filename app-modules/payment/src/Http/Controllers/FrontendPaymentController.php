@@ -98,9 +98,8 @@ class FrontendPaymentController extends Controller
             // Create payment record directly with payment_type = 'custom_payment'
             $payment = Payment::create([
                 'payment_type' => 'custom_payment',
-                'booking_id' => null,
                 'amount' => $request->amount,
-                'email_address' => $request->email,
+                'email' => $request->email,
                 'name' => $request->name,
                 'mobile' => $request->mobile,
                 'purpose' => $request->purpose,
@@ -111,7 +110,7 @@ class FrontendPaymentController extends Controller
                 'user_agent' => $request->userAgent(),
                 'form_data' => [
                     'name' => $request->name,
-                    'email_address' => $request->email,
+                    'email' => $request->email,
                     'mobile' => $request->mobile,
                     'amount' => $request->amount,
                     'purpose' => $request->purpose,
@@ -138,7 +137,6 @@ class FrontendPaymentController extends Controller
     public function showPayment(Payment $payment)
     {
         // Load related data
-        $payment->load(['booking']);
 
         // Get gateway charges
         $gatewayCharges = [
@@ -236,7 +234,6 @@ class FrontendPaymentController extends Controller
     public function showPaymentConfirmation(Payment $payment)
     {
         // Load related data
-        $payment->load(['booking']);
 
         // Render different confirmation views based on payment method
         switch ($payment->payment_method) {

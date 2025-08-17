@@ -24,6 +24,10 @@
         </div>
     </div>
     
+    <a href="{{ route('subscription.pricing') }}" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+        {{ __('messages.pricing') }}
+    </a>
+    
     <a href="{{ route('payment::custom-payment.form') }}" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
         {{ __('messages.payment') }}
     </a>

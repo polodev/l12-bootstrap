@@ -412,8 +412,8 @@ php artisan view:clear
 
 ### 4. Access the System
 
-- **Pricing Page**: http://l12-bootstrap.test//pricing
-- **Admin Dashboard**: http://l12-bootstrap.test//admin (requires admin account)
+- **Pricing Page**: http://l12-bootstrap.test/pricing
+- **Admin Dashboard**: http://l12-bootstrap.test/admin (requires admin account)
 
 ## Usage Examples
 

@@ -112,6 +112,8 @@ class SubscriptionController extends Controller
      */
     public function processPurchase(Request $request)
     {
+        \Log::info('ProcessPurchase started', $request->all());
+        
         $request->validate([
             'plan_id' => 'required|exists:subscription_plans,id',
             'payment_method' => 'required|in:sslcommerz,bkash,nagad,bank_transfer',
@@ -166,18 +168,22 @@ class SubscriptionController extends Controller
                 'payment_type' => 'subscription',
                 'subscription_plan_id' => $plan->id,
                 'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'mobile' => $user->mobile ?? '01XXXXXXXXX',
                 'amount' => $finalAmount,
                 'original_amount' => $originalAmount,
                 'discount_amount' => $discountAmount,
                 'coupon_id' => $couponId,
                 'coupon_code' => $couponCode,
-                'email_address' => $user->email,
                 'status' => 'pending',
                 'payment_method' => $request->payment_method,
-                'gateway_payment_id' => 'SUB_' . time() . '_' . $user->id,
+                'purpose' => $plan->getTranslation('plan_title', app()->getLocale()) ?? $plan->name,
+                'description' => 'Subscription payment for ' . ($plan->getTranslation('plan_title', app()->getLocale()) ?? $plan->name),
+                'currency' => 'BDT',
             ]);
 
-            // Create subscription record
+            // Create subscription record (pending until payment is confirmed)
             $startsAt = now();
             $endsAt = $startsAt->copy()->addMonths($plan->duration_months);
 
@@ -195,27 +201,13 @@ class SubscriptionController extends Controller
                 'coupon_code' => $couponCode,
             ]);
 
-            // Apply coupon usage if coupon was used
-            if ($couponId) {
-                $coupon = Coupon::find($couponId);
-                $coupon->applyToSubscription($user, $subscription);
-            }
+            // Store subscription ID in payment for easy reference
+            $payment->update(['subscription_id' => $subscription->id]);
 
             DB::commit();
 
-            // For demo purposes, we'll mark as completed immediately
-            // In a real app, you'd redirect to payment gateway
-            $payment->update([
-                'status' => 'completed',
-                'payment_date' => now(),
-                'processed_at' => now(),
-                'transaction_id' => 'TXN_' . time(),
-            ]);
-
-            $subscription->update(['status' => 'active']);
-
-            return redirect()->route('subscription.success')
-                ->with('success', 'Subscription purchased successfully!');
+            // Redirect to SSL Commerz payment gateway
+            return redirect()->route('payment::sslcommerz.process', $payment->id);
 
         } catch (\Exception $e) {
             DB::rollback();

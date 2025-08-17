@@ -102,10 +102,10 @@
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.full_name') }}</label>
                                     <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $payment->name }}</p>
                                 </div>
-                                @if($payment->email_address)
+                                @if($payment->email)
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.email_address') }}</label>
-                                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $payment->email_address }}</p>
+                                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $payment->email }}</p>
                                 </div>
                                 @endif
                                 <div>

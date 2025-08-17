@@ -439,7 +439,7 @@ Route::get('/test-email', function () {
 
 ### 7.2 Test Email Sending
 
-1. **Visit the test route**: http://l12-bootstrap.test//test-email
+1. **Visit the test route**: http://l12-bootstrap.test/test-email
 2. **Check the response** for success/error messages
 3. **Check your email** for the welcome message
 4. **Check Laravel logs** (`storage/logs/laravel.log`) for any errors

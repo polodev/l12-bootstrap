@@ -28,7 +28,7 @@ class PaymentController extends Controller
                           ->orWhere('gateway_payment_id', 'like', "%{$searchText}%")
                           ->orWhere('receipt_number', 'like', "%{$searchText}%")
                           ->orWhere('name', 'like', "%{$searchText}%")
-                          ->orWhere('email_address', 'like', "%{$searchText}%")
+                          ->orWhere('email', 'like', "%{$searchText}%")
                           ->orWhere('mobile', 'like', "%{$searchText}%");
                     });
                 }
@@ -63,7 +63,7 @@ class PaymentController extends Controller
                 if ($payment->payment_type === 'custom_payment') {
                     $html = '<div>';
                     $html .= '<div class="font-medium text-gray-900 dark:text-gray-100">' . htmlspecialchars($payment->name) . '</div>';
-                    $html .= '<div class="text-xs text-gray-500 dark:text-gray-400">' . htmlspecialchars($payment->email_address ?? $payment->mobile) . '</div>';
+                    $html .= '<div class="text-xs text-gray-500 dark:text-gray-400">' . htmlspecialchars($payment->email ?? $payment->mobile) . '</div>';
                     $html .= '</div>';
                     return $html;
                 }
@@ -117,7 +117,7 @@ class PaymentController extends Controller
             'amount' => 'required|numeric|min:100',
             'payment_method' => 'required|in:sslcommerz,manual_payment',
             // Optional fields
-            'email_address' => 'nullable|email|max:255',
+            'email' => 'nullable|email|max:255',
             'purpose' => 'nullable|string|max:255',
             'status' => 'nullable|in:pending,processing,completed,failed,cancelled,refunded',
             'description' => 'nullable|string',
@@ -173,7 +173,7 @@ class PaymentController extends Controller
             'admin_notes' => 'nullable|string',
             // Custom payment fields
             'name' => 'nullable|string|max:255',
-            'email_address' => 'nullable|email|max:255',
+            'email' => 'nullable|email|max:255',
             'mobile' => 'nullable|string|max:20',
             'purpose' => 'nullable|string|max:255',
             'description' => 'nullable|string',

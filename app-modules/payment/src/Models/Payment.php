@@ -18,7 +18,7 @@ class Payment extends Model implements HasMedia
         'payment_type',
         'created_by',
         'amount',
-        'email_address',
+        'email',
         'store_name',
         'status',
         'payment_method',
@@ -228,9 +228,9 @@ class Payment extends Model implements HasMedia
      */
     public function getEmailForPaymentAttribute(): string
     {
-        // 1. Use email_address column if set
-        if (!empty($this->email_address)) {
-            return $this->email_address;
+        // 1. Use email column if set
+        if (!empty($this->email)) {
+            return $this->email;
         }
 
         // 2. Try to get email from custom payment

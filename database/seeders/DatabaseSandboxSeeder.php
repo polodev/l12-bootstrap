@@ -13,7 +13,6 @@ use Modules\Location\Database\Seeders\CitySeeder;
 use Modules\Location\Database\Seeders\CountrySeeder;
 use Modules\Option\Database\Seeders\OptionSeeder;
 use Modules\Page\Database\Seeders\PageSeeder;
-use Modules\Payment\Database\Seeders\PaymentSeeder;
 use Modules\Subscription\Database\Seeders\SubscriptionSeeder;
 use Modules\Coupon\Database\Seeders\CouponSeeder;
 
@@ -35,9 +34,6 @@ class DatabaseSandboxSeeder extends Seeder
             // Location Module - Must run first (dependencies)
             CountrySeeder::class,
             CitySeeder::class,
-
-            // Payment Module
-            PaymentSeeder::class,
 
             // Subscription & Coupon Modules
             SubscriptionSeeder::class,

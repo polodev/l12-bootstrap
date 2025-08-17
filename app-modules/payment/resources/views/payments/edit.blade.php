@@ -29,15 +29,7 @@
                 <div class="mb-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Payment Association</h3>
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        @if($payment->booking)
-                            <div class="flex items-center space-x-3">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100">Booking Payment</span>
-                                <div>
-                                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ $payment->booking->booking_reference }}</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ $payment->booking->user->name ?? 'Guest User' }}</div>
-                                </div>
-                            </div>
-                        @elseif($payment->payment_type === 'custom_payment')
+                        @if($payment->payment_type === 'custom_payment')
                             <div class="flex items-center space-x-3">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-100">Custom Payment</span>
                                 <div>
@@ -46,7 +38,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="text-gray-500 dark:text-gray-400">No associated booking or custom payment</div>
+                            <div class="text-gray-500 dark:text-gray-400">Payment type: {{ ucfirst($payment->payment_type) }}</div>
                         @endif
                     </div>
                 </div>
@@ -82,12 +74,12 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="email_address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                 Customer Email
                             </label>
-                            <input type="email" id="email_address" name="email_address" value="{{ old('email_address', $payment->email_address) }}"
+                            <input type="email" id="email" name="email" value="{{ old('email', $payment->email) }}"
                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            @error('email_address')
+                            @error('email')
                                 <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
                         </div>

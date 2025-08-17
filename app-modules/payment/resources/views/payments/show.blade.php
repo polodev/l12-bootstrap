@@ -176,26 +176,7 @@
                     <!-- Customer Information -->
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Customer Information</h3>
-                        @if($payment->booking)
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <span class="text-sm text-gray-600 dark:text-gray-400">Customer Name:</span>
-                                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ $payment->booking->user->name ?? 'Guest User' }}</div>
-                                </div>
-                                <div>
-                                    <span class="text-sm text-gray-600 dark:text-gray-400">Email:</span>
-                                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ $payment->booking->user->email ?? 'N/A' }}</div>
-                                </div>
-                                <div>
-                                    <span class="text-sm text-gray-600 dark:text-gray-400">Booking Reference:</span>
-                                    <div class="font-mono text-gray-900 dark:text-gray-100">{{ $payment->booking->booking_reference }}</div>
-                                </div>
-                                <div>
-                                    <span class="text-sm text-gray-600 dark:text-gray-400">Booking Type:</span>
-                                    <div class="text-gray-900 dark:text-gray-100">{{ ucfirst($payment->booking->booking_type) }}</div>
-                                </div>
-                            </div>
-                        @elseif($payment->payment_type === 'custom_payment')
+                        @if($payment->payment_type === 'custom_payment')
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <span class="text-sm text-gray-600 dark:text-gray-400">Customer Name:</span>
@@ -203,7 +184,7 @@
                                 </div>
                                 <div>
                                     <span class="text-sm text-gray-600 dark:text-gray-400">Email:</span>
-                                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ $payment->email_address ?? 'N/A' }}</div>
+                                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ $payment->email ?? 'N/A' }}</div>
                                 </div>
                                 <div>
                                     <span class="text-sm text-gray-600 dark:text-gray-400">Mobile:</span>
@@ -448,16 +429,6 @@
                                 Edit Payment
                             </a>
                             
-                            @if($payment->booking)
-                            <a href="{{ route('booking::admin.bookings.show', $payment->booking) }}" 
-                               class="w-full inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-blue-700 bg-blue-100 border border-blue-300 rounded-md hover:bg-blue-200">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
-                                View Booking
-                            </a>
-                            @endif
 
 
                             <!-- View Frontend Link -->

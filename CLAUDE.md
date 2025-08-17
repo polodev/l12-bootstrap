@@ -2,8 +2,8 @@
 
 ## Development Environment
 - **Local Development**: Laravel Herd
-- **Project URL**: http://l12-bootstrap.test//
-- **Project Path**: /Users/polodev/sites/rajib
+- **Project URL**: http://l12-bootstrap.test/
+- **Project Path**: /Users/polodev/sites/l12-bootstrap
 - **Git Repository**: Yes (clean working tree)
 - **Current Branch**: main
 
@@ -104,10 +104,10 @@ Route::group([
 ```
 
 ## Test Routes Available
-- **Main Test Index**: http://l12-bootstrap.test//test (http://l12-bootstrap.test//bn/test for Bengali)
-- **Admin Layout Test**: http://l12-bootstrap.test//test/admin-dashboard (no localization)
-- **Frontend Layout Test**: http://l12-bootstrap.test//test/customer-frontend (http://l12-bootstrap.test//bn/test/customer-frontend)
-- **Account Layout Test**: http://l12-bootstrap.test//test/customer-account (http://l12-bootstrap.test//bn/test/customer-account)
+- **Main Test Index**: http://l12-bootstrap.test/test (http://l12-bootstrap.test/bn/test for Bengali)
+- **Admin Layout Test**: http://l12-bootstrap.test/test/admin-dashboard (no localization)
+- **Frontend Layout Test**: http://l12-bootstrap.test/test/customer-frontend (http://l12-bootstrap.test/bn/test/customer-frontend)
+- **Account Layout Test**: http://l12-bootstrap.test/test/customer-account (http://l12-bootstrap.test/bn/test/customer-account)
 
 ## Mobile Navigation Features
 - **Always Visible Mobile Controls**: Language switcher, theme switcher, auth buttons, hamburger menu

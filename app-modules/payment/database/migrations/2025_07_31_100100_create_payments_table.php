@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             
-            // Payment type - determines if this is for a booking, custom payment, or subscription
             $table->string('payment_type')->default('custom_payment'); // 'custom_payment', 'subscription'
             
             // Subscription-related fields (used when payment_type = 'subscription')
             $table->foreignId('subscription_plan_id')->nullable(); // Links to subscription_plans table
+            $table->foreignId('subscription_id')->nullable(); // Links to user_subscriptions table
             $table->foreignId('user_id')->nullable(); // User making the subscription payment
             
             // Coupon information for subscription payments
@@ -32,7 +32,7 @@ return new class extends Migration
             
             // Payment details
             $table->decimal('amount', 10, 2);
-            $table->string('email_address')->nullable(); // Email address for payment (used for both types)
+            $table->string('email')->nullable(); // Email address for payment (used for both types)
             $table->string('store_name')->default('default_store'); // SSL Commerz store name
             $table->string('status')->default('pending'); // 'pending', 'processing', 'completed', 'failed', 'cancelled', 'refunded'
             $table->string('payment_method')->nullable(); // 'sslcommerz', 'bkash', 'nagad', 'city_bank', 'brac_bank', 'bank_transfer', 'cash', 'other'
@@ -77,7 +77,7 @@ return new class extends Migration
             $table->index(['gateway_payment_id']);
             $table->index(['payment_date']);
             $table->index(['created_by']);
-            $table->index(['email_address', 'status']); // For payment lookups
+            $table->index(['email', 'status']); // For payment lookups
             $table->index(['mobile', 'status']); // For payment lookups
             $table->index(['ip_address', 'created_at']); // For rate limiting
             $table->index(['payment_type', 'subscription_plan_id']); // For subscription payments

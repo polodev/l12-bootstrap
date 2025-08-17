@@ -99,6 +99,11 @@
                     {{ __('messages.refund_policy') }}
                 </a>
                 <span class="text-gray-400 dark:text-gray-600">•</span>
+                <a href="{{ route('subscription.pricing') }}" 
+                   class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors">
+                    {{ __('messages.pricing') }}
+                </a>
+                <span class="text-gray-400 dark:text-gray-600">•</span>
                 <a href="{{ route('payment::custom-payment.form') }}" 
                    class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors">
                     {{ __('messages.payment') }}
