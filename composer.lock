@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67426456b89cbfd4ac2d0d33e3aab110",
+    "content-hash": "ff09027369ad8567ee1f5cfaaf8a7455",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -3920,6 +3920,38 @@
             }
         },
         {
+            "name": "modules/coupon",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/coupon",
+                "reference": "d7fcc934bdd24ebd1554f7a46abb28e085c2979b"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Coupon\\Providers\\CouponServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Coupon\\": "src/",
+                    "Modules\\Coupon\\Tests\\": "tests/",
+                    "Modules\\Coupon\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Coupon\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "modules/customer-account-layout",
             "version": "1.0",
             "dist": {
@@ -4247,6 +4279,38 @@
                     "Modules\\StaticSite\\Tests\\": "tests/",
                     "Modules\\StaticSite\\Database\\Factories\\": "database/factories/",
                     "Modules\\StaticSite\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/subscription",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/subscription",
+                "reference": "fef96eb62f75bd88e37a9db188b9f61e4d11292d"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Subscription\\Providers\\SubscriptionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Subscription\\": "src/",
+                    "Modules\\Subscription\\Tests\\": "tests/",
+                    "Modules\\Subscription\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Subscription\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [
