@@ -206,8 +206,31 @@ class SubscriptionController extends Controller
 
             DB::commit();
 
-            // Redirect to SSL Commerz payment gateway
-            return redirect()->route('payment::sslcommerz.process', $payment->id);
+            // For subscription payments with sslcommerz, try direct redirect to SSL Commerz gateway
+            if ($request->payment_method === 'sslcommerz') {
+                try {
+                    $sslController = new \Modules\Payment\Http\Controllers\SslCommerzController();
+                    $sslResponse = $sslController->processPayment($payment, $request);
+                    
+                    // If SSL Commerz returns a redirect response, use it
+                    if ($sslResponse instanceof \Illuminate\Http\RedirectResponse) {
+                        return $sslResponse;
+                    }
+                    
+                    // If SSL Commerz failed, fall back to payment page with error message
+                    return redirect()->route('payment::payments.show', $payment->id)
+                        ->with('error', 'Payment gateway temporarily unavailable. Please try again.');
+                        
+                } catch (\Exception $e) {
+                    \Log::error('Direct SSL Commerz redirect failed', ['error' => $e->getMessage()]);
+                    // Fall back to payment page if SSL Commerz processing fails
+                    return redirect()->route('payment::payments.show', $payment->id)
+                        ->with('error', 'Payment gateway temporarily unavailable. Please try again.');
+                }
+            }
+            
+            // For other payment methods, redirect to payment page
+            return redirect()->route('payment::payments.show', $payment->id);
 
         } catch (\Exception $e) {
             DB::rollback();

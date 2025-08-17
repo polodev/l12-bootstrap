@@ -67,6 +67,45 @@
                                     <p class="mt-1 text-sm font-mono text-gray-900 dark:text-gray-100">PAY-{{ $payment->id }}</p>
                                 </div>
                             </div>
+                        @elseif($payment->payment_type === 'subscription')
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.full_name') }}</label>
+                                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $payment->name }}</p>
+                                </div>
+                                @if($payment->email)
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.email_address') }}</label>
+                                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $payment->email }}</p>
+                                </div>
+                                @endif
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.mobile_number') }}</label>
+                                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $payment->mobile }}</p>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.subscription_plan') }}</label>
+                                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $payment->purpose }}</p>
+                                </div>
+                                @if($payment->discount_amount > 0)
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.original_amount') }}</label>
+                                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">৳{{ number_format($payment->original_amount, 2) }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.discount') }}</label>
+                                    <p class="mt-1 text-sm text-green-600 dark:text-green-400">-৳{{ number_format($payment->discount_amount, 2) }}
+                                        @if($payment->coupon_code)
+                                            <span class="text-xs">({{ $payment->coupon_code }})</span>
+                                        @endif
+                                    </p>
+                                </div>
+                                @endif
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.reference') }}</label>
+                                    <p class="mt-1 text-sm font-mono text-gray-900 dark:text-gray-100">SUB-{{ $payment->id }}</p>
+                                </div>
+                            </div>
                         @endif
 
                         <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
