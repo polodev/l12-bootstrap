@@ -34,8 +34,8 @@ class DatabaseProductionSeeder extends Seeder
             // CitySeederProduction::class,
 
             // Subscription & Coupon Modules
-            SubscriptionSeederProduction::class,
-            CouponSeederProduction::class,
+            // SubscriptionSeederProduction::class,
+            // CouponSeederProduction::class,
            
         ]);
 
