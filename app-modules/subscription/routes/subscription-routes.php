@@ -13,6 +13,9 @@ Route::group([
     
     // Public subscription routes
     Route::get('/pricing', [SubscriptionController::class, 'pricing'])->name('subscription.pricing');
+    Route::get('/subscription/demo-component', function() {
+        return view('subscription::demo-component');
+    })->name('subscription.demo-component');
     
     // Authenticated subscription routes
     Route::middleware(['web', 'auth'])->group(function() {

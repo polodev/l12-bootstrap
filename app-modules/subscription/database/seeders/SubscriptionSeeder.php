@@ -15,8 +15,8 @@ class SubscriptionSeeder extends Seeder
     {
         // Define common features for all Pro plans
         $commonFeatures = [
-            'en' => "- **Unlimited Projects** - Create as many projects as you need\n- **Priority Support** - Get help faster with dedicated support\n- **Advanced Analytics** - Detailed insights and reporting\n- **Export Functionality** - Download your data in multiple formats\n- **Team Collaboration** - Invite team members to collaborate\n- **API Access** - Integrate with third-party services\n- **Custom Branding** - White-label solutions available\n- **Advanced Security** - Enhanced protection for your data",
-            'bn' => "- **সীমাহীন প্রকল্প** - যতখুশি প্রকল্প তৈরি করুন\n- **অগ্রাধিকার সহায়তা** - দ্রুত সাহায্য পান ডেডিকেটেড সাপোর্টের মাধ্যমে\n- **উন্নত বিশ্লেষণ** - বিস্তারিত অন্তর্দৃষ্টি এবং রিপোর্টিং\n- **এক্সপোর্ট কার্যকারিতা** - একাধিক ফরম্যাটে ডেটা ডাউনলোড করুন\n- **টিম সহযোগিতা** - সহযোগিতার জন্য টিম সদস্যদের আমন্ত্রণ জানান\n- **API অ্যাক্সেস** - তৃতীয় পক্ষের সেবার সাথে সংযোগ করুন\n- **কাস্টম ব্র্যান্ডিং** - হোয়াইট-লেবেল সমাধান উপলব্ধ\n- **উন্নত নিরাপত্তা** - আপনার ডেটার জন্য বর্ধিত সুরক্ষা"
+            'en' => "- **Unlimited Browse** - Browse without any restrictions\n- **Unlimited Collection** - Create unlimited collections\n- **Unlimited Bookmarks** - Save unlimited bookmarks",
+            'bn' => "- **সীমাহীন ব্রাউজ** - কোনো সীমাবদ্ধতা ছাড়াই ব্রাউজ করুন\n- **সীমাহীন সংগ্রহ** - সীমাহীন সংগ্রহ তৈরি করুন\n- **সীমাহীন বুকমার্ক** - সীমাহীন বুকমার্ক সংরক্ষণ করুন"
         ];
 
         $plans = [

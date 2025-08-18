@@ -119,11 +119,9 @@ class SslCommerzController extends Controller
                 // Activate subscription if this is a subscription payment
                 if ($payment->payment_type === 'subscription' && $payment->subscription_id) {
                     $subscription = \Modules\Subscription\Models\UserSubscription::find($payment->subscription_id);
-                    if ($subscription && $subscription->status === 'pending') {
-                        $subscription->update([
-                            'status' => 'active',
-                            'activated_at' => now()
-                        ]);
+                    if ($subscription && $subscription->is_pending) {
+                        // Just set activated_at - status will be calculated dynamically
+                        $subscription->activate();
                     }
                 }
                 
@@ -254,11 +252,8 @@ class SslCommerzController extends Controller
                     // Activate subscription if this is a subscription payment
                     if ($payment->payment_type === 'subscription' && $payment->subscription_id) {
                         $subscription = \Modules\Subscription\Models\UserSubscription::find($payment->subscription_id);
-                        if ($subscription && $subscription->status === 'pending') {
-                            $subscription->update([
-                                'status' => 'active',
-                                'activated_at' => now()
-                            ]);
+                        if ($subscription && $subscription->is_pending) {
+                            $subscription->activate();
                         }
                     }
 

@@ -29,7 +29,8 @@
       "WebFetch(domain:www.ecotravelsonline.com.bd)",
       "WebFetch(domain:bimafy.com)",
       "Bash(npm install)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "WebSearch"
     ],
     "deny": []
   }

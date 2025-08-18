@@ -22,16 +22,8 @@ class SubscriptionController extends Controller
         $plans = SubscriptionPlan::active()
             ->ordered()
             ->get();
-        
-        $userSubscription = null;
-        if (Auth::check()) {
-            $userSubscription = UserSubscription::forUser(Auth::id())
-                ->with('subscriptionPlan')
-                ->active()
-                ->first();
-        }
 
-        return view('subscription::pricing', compact('plans', 'userSubscription'));
+        return view('subscription::pricing', compact('plans'));
     }
 
     /**
@@ -39,18 +31,9 @@ class SubscriptionController extends Controller
      */
     public function purchase(SubscriptionPlan $plan)
     {
-        // Check if user is already subscribed
-        if (Auth::check()) {
-            $activeSubscription = UserSubscription::forUser(Auth::id())
-                ->active()
-                ->first();
-            
-            if ($activeSubscription) {
-                return redirect()->route('subscription.pricing')
-                    ->with('error', 'You already have an active subscription.');
-            }
-        }
-
+        // Allow users to purchase additional plans for subscription extension
+        // No need to check for existing subscriptions - extensions are supported
+        
         return view('subscription::purchase', compact('plan'));
     }
 
@@ -128,14 +111,16 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         $plan = SubscriptionPlan::findOrFail($request->plan_id);
 
+        // Check if user can purchase (not more than 500 days remaining)
+        if (!UserSubscription::canUserPurchase($user->id)) {
+            $daysRemaining = UserSubscription::getDaysRemainingForUser($user->id);
+            return back()->with('error', "You cannot purchase additional subscription. You have {$daysRemaining} days remaining (limit: 500 days).");
+        }
+
         // Check if user already has active subscription
         $activeSubscription = UserSubscription::forUser($user->id)
             ->active()
             ->first();
-        
-        if ($activeSubscription) {
-            return back()->with('error', 'You already have an active subscription.');
-        }
 
         DB::beginTransaction();
         try {
@@ -183,23 +168,42 @@ class SubscriptionController extends Controller
                 'currency' => 'BDT',
             ]);
 
-            // Create subscription record (pending until payment is confirmed)
-            $startsAt = now();
-            $endsAt = $startsAt->copy()->addMonths($plan->duration_months);
+            // Handle subscription creation or extension
+            if ($activeSubscription) {
+                // Extend existing subscription
+                $startsAt = $activeSubscription->ends_at; // Start from current subscription end date
+                $endsAt = $startsAt->copy()->addMonths($plan->duration_months);
+                
+                $subscription = UserSubscription::create([
+                    'user_id' => $user->id,
+                    'subscription_plan_id' => $plan->id,
+                    'payment_id' => $payment->id,
+                    'starts_at' => $startsAt,
+                    'ends_at' => $endsAt,
+                    'paid_amount' => $finalAmount,
+                    'currency' => 'BDT',
+                    'coupon_id' => $couponId,
+                    'discount_amount' => $discountAmount,
+                    'coupon_code' => $couponCode,
+                ]);
+            } else {
+                // Create new subscription
+                $startsAt = now();
+                $endsAt = $startsAt->copy()->addMonths($plan->duration_months);
 
-            $subscription = UserSubscription::create([
-                'user_id' => $user->id,
-                'subscription_plan_id' => $plan->id,
-                'payment_id' => $payment->id,
-                'starts_at' => $startsAt,
-                'ends_at' => $endsAt,
-                'status' => 'pending',
-                'paid_amount' => $finalAmount,
-                'currency' => 'BDT',
-                'coupon_id' => $couponId,
-                'discount_amount' => $discountAmount,
-                'coupon_code' => $couponCode,
-            ]);
+                $subscription = UserSubscription::create([
+                    'user_id' => $user->id,
+                    'subscription_plan_id' => $plan->id,
+                    'payment_id' => $payment->id,
+                    'starts_at' => $startsAt,
+                    'ends_at' => $endsAt,
+                    'paid_amount' => $finalAmount,
+                    'currency' => 'BDT',
+                    'coupon_id' => $couponId,
+                    'discount_amount' => $discountAmount,
+                    'coupon_code' => $couponCode,
+                ]);
+            }
 
             // Store subscription ID in payment for easy reference
             $payment->update(['subscription_id' => $subscription->id]);

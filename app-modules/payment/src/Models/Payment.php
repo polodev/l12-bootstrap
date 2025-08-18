@@ -16,6 +16,16 @@ class Payment extends Model implements HasMedia
     use LogsActivity, InteractsWithMedia;
     protected $fillable = [
         'payment_type',
+        
+        // Subscription-related fields
+        'subscription_plan_id',
+        'subscription_id',
+        'user_id',
+        'coupon_id',
+        'original_amount',
+        'discount_amount',
+        'coupon_code',
+        
         'created_by',
         'amount',
         'email',

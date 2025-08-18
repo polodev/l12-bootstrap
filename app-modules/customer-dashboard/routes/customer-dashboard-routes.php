@@ -6,6 +6,7 @@ use Modules\CustomerDashboard\Http\Controllers\AddressController;
 use Modules\CustomerDashboard\Http\Controllers\Settings\ProfileController;
 use Modules\CustomerDashboard\Http\Controllers\Settings\PasswordController;
 use Modules\CustomerDashboard\Http\Controllers\Settings\AppearanceController;
+use Modules\CustomerDashboard\Http\Controllers\PaymentHistoryController;
 
 // Customer Account routes (localized) - All customer-facing routes should support language switching
 Route::group([
@@ -19,7 +20,11 @@ Route::group([
             Route::get('/', [AccountController::class, 'index'])->name('index');
             Route::get('/orders', [AccountController::class, 'orders'])->name('orders');
             Route::get('/wishlist', [AccountController::class, 'wishlist'])->name('wishlist');
-            Route::get('/subscription', [AccountController::class, 'subscription'])->name('subscription');
+            Route::get('/subscription', function() {
+                return view('customer-dashboard::accounts.subscription');
+            })->name('subscription');
+            Route::get('/payments', [PaymentHistoryController::class, 'index'])->name('payments');
+            Route::get('/payments/{id}', [PaymentHistoryController::class, 'show'])->name('payments.show');
             Route::get('/support', [AccountController::class, 'support'])->name('support');
             
             // Settings routes (under accounts)

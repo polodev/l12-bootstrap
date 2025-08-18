@@ -12,27 +12,26 @@
                 Unlock advanced features and take your projects to the next level with our Pro subscription plans.
             </p>
             
-            @if($userSubscription)
-                <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 max-w-md mx-auto mb-8">
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 text-green-600 dark:text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="text-green-800 dark:text-green-200 font-medium">
-                            Active: {{ $userSubscription->subscriptionPlan->name }}
-                        </span>
-                    </div>
-                    <p class="text-sm text-green-700 dark:text-green-300 mt-1">
-                        Expires {{ $userSubscription->ends_at->format('M j, Y') }}
-                    </p>
+            @auth
+                <div class="max-w-2xl mx-auto mb-8">
+                    <livewire:subscription--active-subscription :user="Auth::user()" />
                 </div>
-            @endif
+            @endauth
         </div>
     </section>
 
     <!-- Pricing Cards -->
     <section class="bg-gray-50 dark:bg-gray-800 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            @auth
+                @php
+                    // Use single efficient function for all subscription data
+                    $subscriptionInfo = \Modules\Subscription\Models\UserSubscription::getCompleteSubscriptionInfo(Auth::id());
+                    $canPurchase = $subscriptionInfo['days_remaining'] <= 500;
+                    $daysRemaining = $subscriptionInfo['days_remaining'];
+                @endphp
+            @endauth
+            
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach($plans as $plan)
                     <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 text-center relative {{ $plan->duration_months == 12 ? 'ring-2 ring-blue-500 scale-105' : '' }}">
@@ -82,29 +81,28 @@
                             </div>
                         @endif
 
-                        @if($userSubscription)
-                            @if($userSubscription->subscription_plan_id == $plan->id)
-                                <button class="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold cursor-not-allowed" disabled>
-                                    Current Plan
-                                </button>
-                            @else
-                                <button class="w-full bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 py-3 px-6 rounded-lg font-semibold cursor-not-allowed" disabled>
-                                    Upgrade Available Soon
-                                </button>
-                            @endif
-                        @else
-                            @auth
+                        @auth
+                            @if($canPurchase)
                                 <a href="{{ route('subscription.purchase', $plan) }}" 
                                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors inline-block">
                                     Choose Plan
                                 </a>
                             @else
-                                <a href="{{ route('login') }}" 
-                                   class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors inline-block">
-                                    Login to Purchase
-                                </a>
-                            @endauth
-                        @endif
+                                <div class="w-full">
+                                    <button class="w-full bg-gray-400 text-white py-3 px-6 rounded-lg font-semibold cursor-not-allowed" disabled>
+                                        Purchase Limit Reached
+                                    </button>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                                        You have {{ $daysRemaining }} days remaining
+                                    </p>
+                                </div>
+                            @endif
+                        @else
+                            <a href="{{ route('login') }}" 
+                               class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors inline-block">
+                                Login to Purchase
+                            </a>
+                        @endauth
                     </div>
                 @endforeach
             </div>

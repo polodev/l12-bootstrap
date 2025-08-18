@@ -11,28 +11,28 @@ class AccountController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('customer-dashboard::account.index', compact('user'));
+        return view('customer-dashboard::accounts.index', compact('user'));
     }
 
     public function orders()
     {
         $user = auth()->user();
         // TODO: Add orders functionality later
-        return view('customer-dashboard::account.orders', compact('user'));
+        return view('customer-dashboard::accounts.orders', compact('user'));
     }
 
     public function wishlist()
     {
         $user = auth()->user();
         // TODO: Add wishlist functionality later
-        return view('customer-dashboard::account.wishlist', compact('user'));
+        return view('customer-dashboard::accounts.wishlist', compact('user'));
     }
 
     public function support()
     {
         $user = auth()->user();
         // TODO: Add support functionality later
-        return view('customer-dashboard::account.support', compact('user'));
+        return view('customer-dashboard::accounts.support', compact('user'));
     }
 
     public function subscription()
@@ -51,6 +51,6 @@ class AccountController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         
-        return view('customer-dashboard::account.subscription', compact('user', 'currentSubscription', 'subscriptionHistory'));
+        return view('customer-dashboard::accounts.subscription', compact('user', 'currentSubscription', 'subscriptionHistory'));
     }
 }

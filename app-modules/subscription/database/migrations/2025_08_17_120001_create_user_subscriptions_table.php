@@ -20,10 +20,10 @@ return new class extends Migration
             // Subscription period
             $table->datetime('starts_at');
             $table->datetime('ends_at');
+            $table->datetime('activated_at')->nullable();
             $table->datetime('cancelled_at')->nullable();
             
-            // Status tracking
-            $table->string('status')->default('active'); // 'active', 'expired', 'cancelled', 'pending'
+            // Status is calculated dynamically via model accessor based on payment status and dates
             
             // Pricing at time of purchase (for historical record)
             $table->decimal('paid_amount', 10, 2);
@@ -37,10 +37,10 @@ return new class extends Migration
             $table->timestamps();
             
             // Indexes
-            $table->index(['user_id', 'status']);
             $table->index(['user_id', 'ends_at']);
-            $table->index(['status', 'ends_at']);
-            $table->index('payment_id');
+            $table->index(['payment_id']);
+            $table->index(['starts_at', 'ends_at']);
+            $table->index(['cancelled_at']);
         });
     }
 
