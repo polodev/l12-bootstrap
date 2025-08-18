@@ -5,6 +5,7 @@ namespace Modules\Payment\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
+use Modules\Subscription\Models\SubscriptionPlan;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\MediaLibrary\HasMedia;
@@ -65,6 +66,16 @@ class Payment extends Model implements HasMedia
         'failed_at' => 'datetime',
         'refunded_at' => 'datetime',
     ];
+
+    public function subscriptionPlan()
+    {
+        return $this->belongsTo(SubscriptionPlan::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 
 

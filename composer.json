@@ -32,7 +32,7 @@
         "modules/customer-frontend-layout": "*",
         "modules/documentation": "*",
         "modules/location": "*",
-        "modules/my-file": "@dev",
+        "modules/my-file": "*",
         "modules/option": "*",
         "modules/page": "*",
         "modules/payment": "*",
