@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9ec578601c2fc629314de863033d555f",
+    "content-hash": "d008ab25dd8523a3ba937c8b7fabead2",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4263,6 +4263,38 @@
                     "Modules\\Subscription\\Tests\\": "tests/",
                     "Modules\\Subscription\\Database\\Factories\\": "database/factories/",
                     "Modules\\Subscription\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/support-ticket",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/support-ticket",
+                "reference": "80d44f43d865c722b0f15cf409e0910561f2071a"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\SupportTicket\\Providers\\SupportTicketServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\SupportTicket\\": "src/",
+                    "Modules\\SupportTicket\\Tests\\": "tests/",
+                    "Modules\\SupportTicket\\Database\\Factories\\": "database/factories/",
+                    "Modules\\SupportTicket\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [

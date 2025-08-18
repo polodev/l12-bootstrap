@@ -38,6 +38,7 @@
         "modules/payment": "*",
         "modules/static-site": "*",
         "modules/subscription": "*",
+        "modules/support-ticket": "*",
         "modules/test": "*",
         "modules/user-data": "*",
         "modules/utility": "*",
