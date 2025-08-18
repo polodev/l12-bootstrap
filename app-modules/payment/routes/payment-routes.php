@@ -48,4 +48,7 @@ Route::middleware(['web'])->name('payment::')->group(function () {
     Route::post('/sslcommerz/fail/{store?}', [SslCommerzController::class, 'fail'])->name('sslcommerz.fail');
     Route::post('/sslcommerz/cancel/{store?}', [SslCommerzController::class, 'cancel'])->name('sslcommerz.cancel');
     Route::post('/sslcommerz/ipn/{store?}', [SslCommerzController::class, 'ipn'])->name('sslcommerz.ipn');
+    
+    // Non-localized payment confirmation route for SSL Commerz callbacks
+    Route::get('/sslcommerz-callback/payment-confirmation/{payment}', [FrontendPaymentController::class, 'showPaymentConfirmation'])->name('payments.confirmation.callback');
 });

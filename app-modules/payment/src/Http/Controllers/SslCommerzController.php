@@ -116,13 +116,25 @@ class SslCommerzController extends Controller
                 $payment_data['status'] = 'completed';
                 $payment->update($payment_data);
                 
+                // Activate subscription if this is a subscription payment
+                if ($payment->payment_type === 'subscription' && $payment->subscription_id) {
+                    $subscription = \Modules\Subscription\Models\UserSubscription::find($payment->subscription_id);
+                    if ($subscription && $subscription->status === 'pending') {
+                        $subscription->update([
+                            'status' => 'active',
+                            'activated_at' => now()
+                        ]);
+                    }
+                }
                 
-                return redirect()->route('payment::payments.confirmation', $payment);
+                // SSL Commerz callback completed - no session manipulation needed
+                
+                return redirect()->route('payment::payments.confirmation.callback', $payment);
             } else {
                 $payment_data['status'] = 'failed';
                 $payment->update($payment_data);
                 
-                return redirect()->route('payment::payments.confirmation', $payment);
+                return redirect()->route('payment::payments.confirmation.callback', $payment);
             }
         } else if ($payment->status == 'completed') {
             return view('payment::frontend.payment-success', compact('payment'));
@@ -239,7 +251,17 @@ class SslCommerzController extends Controller
                     $payment_data['payment_date'] = now();
                     $payment->update($payment_data);
 
-    
+                    // Activate subscription if this is a subscription payment
+                    if ($payment->payment_type === 'subscription' && $payment->subscription_id) {
+                        $subscription = \Modules\Subscription\Models\UserSubscription::find($payment->subscription_id);
+                        if ($subscription && $subscription->status === 'pending') {
+                            $subscription->update([
+                                'status' => 'active',
+                                'activated_at' => now()
+                            ]);
+                        }
+                    }
+
                     return response('SUCCESS', 200);
                 } else {
                     $payment_data['status'] = 'failed';

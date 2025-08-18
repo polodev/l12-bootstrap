@@ -17,7 +17,8 @@ class UserTableSeederProduction extends Seeder
         User::firstOrCreate(['email' => 'polodev10@gmail.com'], [
             'name' => 'Shibu Chandra Debnath',
             'password' => bcrypt('hello123$$'),
-            'role' => 'developer'
+            'role' => 'developer',
+            'email_verified_at' => now(),
         ]);
         
     }
