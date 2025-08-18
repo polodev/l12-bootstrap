@@ -1,113 +1,92 @@
 <x-admin-dashboard-layout::layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Support Tickets
-            </h2>
-            <div class="flex space-x-3">
-                <button id="bulkActionsBtn" class="hidden bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                    Bulk Actions
-                </button>
-                <a href="{{ route('support-ticket::admin.tickets.stats') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                    Statistics
-                </a>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <!-- Filter Section -->
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Support Tickets</h2>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600" id="filter_area_controller">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"></path>
+                        </svg>
+                        Toggle Filters
+                    </button>
+                    <button id="bulkActionsBtn" class="hidden inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        Bulk Actions
+                    </button>
+                    <a href="{{ route('support-ticket::admin.tickets.stats') }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Statistics
+                    </a>
+                </div>
+            </div>
+            
+            <div id="filter_area" class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3" style="display: block;">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div>
+                        <label for="status_filter" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Filter by Status</label>
+                        <select id="status_filter" class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+                            <option value="">All Statuses</option>
+                            <option value="new">New</option>
+                            <option value="open">Open</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="priority_filter" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Filter by Priority</label>
+                        <select id="priority_filter" class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+                            <option value="">All Priorities</option>
+                            <option value="low">Low</option>
+                            <option value="normal">Normal</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ticket_creation_date_range" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Creation Date Range</label>
+                        <input class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" type="text" name="ticket_creation_date_range" id="ticket_creation_date_range" placeholder="Select date range">
+                    </div>
+                    <div>
+                        <label for="search_text" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Quick Search</label>
+                        <input class="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" type="text" name="search_text" id="search_text" placeholder="Search tickets...">
+                    </div>
+                </div>
             </div>
         </div>
-    </x-slot>
-
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Search and Filters Bar -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6">
-                    <div class="flex flex-col lg:flex-row lg:items-end gap-4">
-                        <!-- Search Tickets -->
-                        <div class="flex-1">
-                            <label for="search_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search Tickets</label>
-                            <input type="text" id="search_text" 
-                                   placeholder="Search Tickets..." 
-                                   class="w-full px-4 py-2.5 text-sm border-2 border-blue-300 rounded-lg bg-white dark:bg-gray-700 dark:border-blue-600 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out">
-                        </div>
-                        
-                        <!-- Filter by Status -->
-                        <div class="lg:w-48">
-                            <label for="status_filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by Status</label>
-                            <select id="status_filter" class="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">All Statuses</option>
-                                <option value="new">New</option>
-                                <option value="open">Open</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="resolved">Resolved</option>
-                                <option value="closed">Closed</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Additional Filters (Hidden by default) -->
-                        <div class="hidden lg:w-48" id="priority-filter-container">
-                            <label for="priority_filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Priority</label>
-                            <select id="priority_filter" class="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">All Priorities</option>
-                                <option value="low">Low</option>
-                                <option value="normal">Normal</option>
-                                <option value="high">High</option>
-                                <option value="urgent">Urgent</option>
-                            </select>
-                        </div>
-                        
-                        <div class="hidden lg:w-48" id="category-filter-container">
-                            <label for="category_filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
-                            <select id="category_filter" class="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">All Categories</option>
-                                <option value="general">General</option>
-                                <option value="technical">Technical</option>
-                                <option value="billing">Billing</option>
-                                <option value="feature_request">Feature Request</option>
-                                <option value="bug_report">Bug Report</option>
-                                <option value="account">Account</option>
-                            </select>
-                        </div>
-                        
-                        <div class="hidden lg:w-48" id="assigned-filter-container">
-                            <label for="assigned_filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Assigned To</label>
-                            <select id="assigned_filter" class="w-full px-3 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">All Staff</option>
-                                <option value="unassigned">Unassigned</option>
-                                <option value="{{ auth()->id() }}">Assigned to Me</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tickets Table -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <div class="overflow-x-auto">
-                        <table id="tickets-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-900">
-                                <tr>
-                                    <th class="px-6 py-3 text-left">
-                                        <input type="checkbox" id="select-all" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ticket</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ticket Info</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Customer</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Priority</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Assigned</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Messages</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Created</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                <!-- DataTables will populate this -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        
+        <!-- DataTable Container -->
+        <div class="overflow-hidden">
+            <table id="tickets-table" class="w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-900">
+                    <tr>
+                        <th class="px-6 py-4 text-left">
+                            <input type="checkbox" id="select-all" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ticket</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ticket Info</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Customer</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Priority</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Assigned</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Last Answered</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Created</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <!-- DataTables will populate this -->
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -148,6 +127,15 @@
     @push('scripts')
     <script>
     $(document).ready(function() {
+        // Toggle filter area
+        $('#filter_area_controller').on('click', function() {
+            const filterArea = $('#filter_area');
+            if (filterArea.is(':visible')) {
+                filterArea.slideUp();
+            } else {
+                filterArea.slideDown();
+            }
+        });
         // Initialize DataTable
         let table = $('#tickets-table').DataTable({
             processing: true,
@@ -179,7 +167,7 @@
                 {data: 'priority_badge', name: 'priority', searchable: false},
                 {data: 'category_badge', name: 'category', searchable: false},
                 {data: 'assigned_info', name: 'assigned_to', searchable: false},
-                {data: 'messages_count', name: 'messages_count', orderable: false, searchable: false},
+                {data: 'last_answered', name: 'last_answered', orderable: false, searchable: false},
                 {data: 'created_at_formatted', name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ],

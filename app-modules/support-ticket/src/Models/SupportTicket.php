@@ -270,6 +270,55 @@ class SupportTicket extends Model
     }
 
     /**
+     * Get last answered badge HTML.
+     */
+    public function getLastAnsweredBadgeAttribute(): string
+    {
+        return $this->getLastAnsweredBadge('customer');
+    }
+
+    /**
+     * Get last answered badge for specific context.
+     */
+    public function getLastAnsweredBadge(string $context = 'customer'): string
+    {
+        $latestMessage = $this->messages()
+            ->where('is_internal', false)
+            ->with('author')
+            ->latest('created_at')
+            ->first();
+
+        if (!$latestMessage) {
+            $text = $context === 'admin' ? 'No conversation yet' : 'No messages yet';
+            return sprintf(
+                '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400">%s</span>',
+                $text
+            );
+        }
+
+        $isFromCustomer = $latestMessage->isFromCustomer();
+        
+        // Determine status text based on context
+        if ($context === 'admin') {
+            $status = $isFromCustomer ? 'Customer asked' : 'Customer Care responded';
+            $colorClass = $isFromCustomer 
+                ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'  // Customer asked - needs attention
+                : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';     // We responded - good
+        } else {
+            $status = $isFromCustomer ? 'You asked' : 'Customer Care responded';
+            $colorClass = $isFromCustomer 
+                ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'         // You asked - waiting
+                : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';    // They responded - good
+        }
+
+        return sprintf(
+            '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium %s">%s</span>',
+            $colorClass,
+            $status
+        );
+    }
+
+    /**
      * Get truncated description.
      */
     public function getTruncatedDescriptionAttribute(): string
@@ -385,5 +434,69 @@ class SupportTicket extends Model
             'deleted' => "Support ticket #{$this->id} deleted: {$this->title}",
             default => "Support ticket {$eventName}: {$this->title}"
         };
+    }
+
+    /**
+     * Get the last answered status for listing display.
+     * Returns different text based on viewer context (admin vs customer).
+     * 
+     * @param string $context 'admin' or 'customer'
+     * @return string
+     */
+    public function getLastAnsweredStatus(string $context = 'admin'): string
+    {
+        // Get the latest public message (exclude internal notes)
+        $latestMessage = $this->messages()
+            ->where('is_internal', false)
+            ->with('author')
+            ->latest('created_at')
+            ->first();
+
+        if (!$latestMessage) {
+            return $context === 'admin' ? 'No conversation yet' : 'No messages yet';
+        }
+
+        $isFromCustomer = $latestMessage->isFromCustomer();
+
+        if ($context === 'admin') {
+            return $isFromCustomer ? 'Customer asked' : 'Customer Care responded';
+        } else { // customer context
+            return $isFromCustomer ? 'You asked' : 'Customer Care responded';
+        }
+    }
+
+    /**
+     * Get the last answered status with timestamp.
+     * 
+     * @param string $context 'admin' or 'customer'
+     * @return array
+     */
+    public function getLastAnsweredDetails(string $context = 'admin'): array
+    {
+        $latestMessage = $this->messages()
+            ->where('is_internal', false)
+            ->with('author')
+            ->latest('created_at')
+            ->first();
+
+        if (!$latestMessage) {
+            return [
+                'status' => $context === 'admin' ? 'No conversation yet' : 'No messages yet',
+                'timestamp' => null,
+                'formatted_time' => 'Never'
+            ];
+        }
+
+        $isFromCustomer = $latestMessage->isFromCustomer();
+        
+        $status = $context === 'admin' 
+            ? ($isFromCustomer ? 'Customer asked' : 'Customer Care responded')
+            : ($isFromCustomer ? 'You asked' : 'Customer Care responded');
+
+        return [
+            'status' => $status,
+            'timestamp' => $latestMessage->created_at,
+            'formatted_time' => $latestMessage->created_at->diffForHumans()
+        ];
     }
 }

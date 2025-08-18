@@ -14,7 +14,7 @@ class SupportTicketController extends Controller
      */
     public function index()
     {
-        $tickets = SupportTicket::with(['messages'])
+        $tickets = SupportTicket::with(['messages.author'])
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->paginate(10);

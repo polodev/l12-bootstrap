@@ -38,6 +38,28 @@
 
     <div class="py-6">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <!-- Breadcrumbs -->
+            <nav class="flex mb-6" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400">
+                    <li>
+                        <div>
+                            <a href="{{ route('support-ticket::tickets.index') }}" class="hover:text-gray-700 dark:hover:text-gray-300 font-medium">
+                                {{ __('messages.support_tickets') }}
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="flex-shrink-0 h-4 w-4 text-gray-400 mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z"/>
+                            </svg>
+                            <span class="font-medium text-gray-700 dark:text-gray-300">
+                                {{ __('messages.ticket') }} #{{ $ticket->id }}
+                            </span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
             <!-- Ticket Status and Info -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
@@ -54,10 +76,10 @@
                         </div>
                     </div>
                     
-                    <div class="prose dark:prose-invert max-w-none">
+                    <div>
                         <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">{{ __('messages.ticket_description') }}</h3>
                         <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                            <p class="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{{ $ticket->description }}</p>
+                            {!! \App\Helpers\Helpers::renderMarkdownCompact($ticket->description) !!}
                         </div>
                     </div>
 
@@ -121,11 +143,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="message-content text-sm text-gray-700 dark:text-gray-300 leading-relaxed" id="message-content-{{ $message->id }}">
-                                @php
-                                    $html = \Illuminate\Support\Str::markdown($message->message);
-                                    echo $html;
-                                @endphp
+                            <div id="message-content-{{ $message->id }}">
+                                {!! \App\Helpers\Helpers::renderMarkdownCompact($message->message) !!}
                             </div>
                         </div>
                         @empty

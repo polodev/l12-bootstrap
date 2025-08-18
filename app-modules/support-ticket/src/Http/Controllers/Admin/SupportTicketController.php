@@ -63,11 +63,7 @@ class SupportTicketController extends Controller
                        '</a>';
             })
             ->addColumn('ticket_info', function (SupportTicket $ticket) {
-                $html = '<div class="max-w-xs">';
-                $html .= '<div class="font-medium text-gray-900 dark:text-gray-100 truncate" title="' . htmlspecialchars($ticket->title) . '">' . htmlspecialchars($ticket->title) . '</div>';
-                $html .= '<div class="text-xs text-gray-500 dark:text-gray-400 mt-1">' . $ticket->truncated_description . '</div>';
-                $html .= '</div>';
-                return $html;
+                return '<div class="font-medium text-gray-900 dark:text-gray-100 truncate" title="' . htmlspecialchars($ticket->title) . '">' . htmlspecialchars($ticket->title) . '</div>';
             })
             ->addColumn('customer_info', function (SupportTicket $ticket) {
                 $user = $ticket->user;
@@ -96,16 +92,17 @@ class SupportTicketController extends Controller
                 }
                 return '<div class="text-sm font-medium text-gray-900 dark:text-gray-100">' . htmlspecialchars($ticket->assignedTo->name) . '</div>';
             })
-            ->addColumn('messages_count', function (SupportTicket $ticket) {
+            ->addColumn('last_answered', function (SupportTicket $ticket) {
                 if (!$ticket || !$ticket->id) {
-                    return '<div class="text-center text-gray-400">0</div>';
+                    return '<div class="text-center text-gray-400">-</div>';
                 }
-                $count = $ticket->messages()->count();
-                $lastMessage = $ticket->messages()->latest('created_at')->first();
+                
                 $html = '<div class="text-center">';
-                $html .= '<div class="font-medium text-gray-900 dark:text-gray-100">' . $count . '</div>';
-                if ($lastMessage) {
-                    $html .= '<div class="text-xs text-gray-500 dark:text-gray-400">' . $lastMessage->created_at->diffForHumans() . '</div>';
+                $html .= $ticket->getLastAnsweredBadge('admin');
+                
+                $details = $ticket->getLastAnsweredDetails('admin');
+                if ($details['timestamp']) {
+                    $html .= '<div class="text-xs text-gray-500 dark:text-gray-400 mt-1">' . $details['formatted_time'] . '</div>';
                 }
                 $html .= '</div>';
                 return $html;
@@ -127,7 +124,7 @@ class SupportTicketController extends Controller
                 $actions .= '</div>';
                 return $actions;
             })
-            ->rawColumns(['formatted_id', 'ticket_info', 'customer_info', 'status_badge', 'priority_badge', 'category_badge', 'assigned_info', 'messages_count', 'action'])
+            ->rawColumns(['formatted_id', 'ticket_info', 'customer_info', 'status_badge', 'priority_badge', 'category_badge', 'assigned_info', 'last_answered', 'action'])
             ->make(true);
         } catch (\Exception $e) {
             \Log::error('Support Ticket DataTables Error: ' . $e->getMessage());
@@ -218,10 +215,7 @@ class SupportTicketController extends Controller
     {
         $ticket->assignTo(auth()->user());
         
-        return response()->json([
-            'success' => true,
-            'message' => 'Ticket assigned to you successfully.'
-        ]);
+        return redirect()->back()->with('success', 'Ticket assigned to you successfully.');
     }
 
     /**

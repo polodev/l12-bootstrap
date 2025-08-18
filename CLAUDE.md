@@ -165,7 +165,73 @@ public/vendor/library-name/
 - **Icons**: Flaticon, FontAwesome
 - **Laravel Packages**: Telescope, Log Viewer, Media Library
 
+## Global Markdown Rendering Helper
 
+### Overview
+A centralized markdown rendering system that provides consistent styling across the application, matching the blog and documentation content approach.
+
+### Location
+- **Helper Class**: `/app/Helpers/Helpers.php`
+
+### Available Methods
+
+#### `Helpers::renderMarkdown($content, $size, $accent_color, $additional_classes)`
+Full-featured markdown rendering with rich typography styling.
+
+**Parameters:**
+- `$content` (string) - The markdown content to render
+- `$size` (string) - Size variant: 'sm', 'base', 'lg', 'xl' (default: 'sm')
+- `$accent_color` (string) - Accent color: 'blue', 'green', 'eco-green', 'red' (default: 'blue')
+- `$additional_classes` (array) - Additional CSS classes to add
+
+**Usage Examples:**
+```php
+// Basic usage
+{!! \App\Helpers\Helpers::renderMarkdown($blog->content) !!}
+
+// With size and accent color
+{!! \App\Helpers\Helpers::renderMarkdown($content, 'lg', 'eco-green') !!}
+
+// With additional classes
+{!! \App\Helpers\Helpers::renderMarkdown($content, 'base', 'blue', ['mt-4', 'border']) !!}
+```
+
+#### `Helpers::renderMarkdownCompact($content, $additional_classes)`
+Simplified markdown rendering for support tickets, comments, and small content areas.
+
+**Parameters:**
+- `$content` (string) - The markdown content to render
+- `$additional_classes` (array) - Additional CSS classes to add
+
+**Usage Examples:**
+```php
+// Basic usage
+{!! \App\Helpers\Helpers::renderMarkdownCompact($message->content) !!}
+
+// With additional classes
+{!! \App\Helpers\Helpers::renderMarkdownCompact($content, ['bg-gray-50', 'p-4']) !!}
+```
+
+### Features
+- **Consistent Styling**: Uses Tailwind Typography (prose) classes
+- **Dark Mode Support**: Includes dark mode variants for all elements
+- **Responsive Design**: Built-in responsive typography
+- **Rich Content Support**: Handles headings, paragraphs, lists, code, blockquotes, images
+- **Customizable Colors**: Support for different accent colors and themes
+- **Performance Optimized**: Single helper function reduces code duplication
+
+### Migration from Direct Str::markdown()
+Replace direct `Str::markdown()` calls:
+
+**Before:**
+```php
+{!! Str::markdown($content) !!}
+```
+
+**After:**
+```php
+{!! \App\Helpers\Helpers::renderMarkdownCompact($content) !!}
+```
 
 ## Development Notes
 - All layouts implement consistent dark mode support
@@ -174,3 +240,4 @@ public/vendor/library-name/
 - Modular architecture allows easy extension and maintenance
 - Test module provides complete layout testing capabilities
 - Third-party assets organized in vendor directory for maintainability
+- Global markdown rendering helper ensures consistent content styling
